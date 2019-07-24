@@ -203,6 +203,9 @@
 </template>
 
 <script>
+    import {  
+        mapState 
+    } from 'vuex';  
 	export default {
 
 		data() {
@@ -221,6 +224,15 @@
 
 		onLoad() {
 			this.loadData();
+			console.log('111111111111111111111');
+			console.log(this.userInfo);
+			uni.getStorage({
+				key:userInfo
+			})
+		},
+		// #endif
+		computed: {
+			...mapState(['hasLogin','userInfo'])
 		},
 		methods: {
 			/**

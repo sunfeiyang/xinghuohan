@@ -118,7 +118,7 @@
 
 			<view class="action-btn-group">
 				<button type="primary" class=" action-btn no-border buy-now-btn" @click="buy">立即购买</button>
-				<button type="primary" class=" action-btn no-border add-cart-btn">加入购物车</button>
+				<button type="primary" class=" action-btn no-border add-cart-btn" @click="addCart">加入购物车</button>
 			</view>
 		</view>
 
@@ -159,6 +159,9 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	import share from '@/components/share';
 	export default {
 		components: {
@@ -253,8 +256,8 @@
 						json.src = val;
 						return json;
 					});
-					this.imgList = newArr;//这个是页面循环的值
-					
+					this.imgList = newArr; //这个是页面循环的值
+
 					// 处理富文本框中的内容
 					let result = res.data.data.info.detail;
 					const regex = new RegExp('<img', 'gi');
@@ -277,6 +280,9 @@
 				}
 			})
 			this.shareList = await this.$api.json('shareList');
+		},
+		computed: {
+			...mapState(['hasLogin', 'Authorization'])
 		},
 		methods: {
 			//规格弹窗开关
@@ -326,6 +332,35 @@
 				uni.navigateTo({
 					url: `/pages/order/createOrder`
 				})
+			},
+			addCart() {
+				let params = {
+					goodsId: this.info.id,
+					number: 1,
+					productId: 0
+				};
+				console.log(params);
+				uni.request({
+					url: 'https://www.xinghuohan.cn/xhh-wx-api/wx/cart/add',
+					method: 'POST',
+					header: {
+						'X-Litemall-Token': this.Authorization || ''
+					},
+					data: {
+						params
+					},
+					success: res => {
+						console.log(res.data);
+						if (res.data.errno === 501) {
+							this.$api.msg(res.data.errmsg);
+						} else {
+							this.$api.msg("成功加入购物车");
+						}
+
+					},
+					fail: () => {},
+					complete: () => {}
+				});
 			},
 			stopPrevent() {}
 		},

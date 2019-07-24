@@ -15,9 +15,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.7.0",
 	"appid": "wxa7fb76a3d5247b20",
-	"projectname": "%E6%98%9F%E7%81%AB%E6%99%97",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"projectname": "星火晗",
 	"condition": {
 		"search": {
 			"current": -1,

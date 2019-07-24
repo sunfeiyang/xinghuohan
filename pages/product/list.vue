@@ -79,7 +79,7 @@
 			this.headerTop = document.getElementsByTagName('uni-page-head')[0].offsetHeight+'px';
 			// #endif
 			this.cateId = options.cid;
-			this.loadCateList(options.fid,options.sid);
+			// this.loadCateList(options.fid,options.sid);
 			this.loadData();
 		},
 		onPageScroll(e){
@@ -100,16 +100,16 @@
 		},
 		methods: {
 			//加载分类
-			async loadCateList(fid, sid){
-				let list = await this.$api.json('cateList');
-				let cateList = list.filter(item=>item.pid == fid);
-				
-				cateList.forEach(item=>{
-					let tempList = list.filter(val=>val.pid == item.id);
-					item.child = tempList;
-				})
-				this.cateList = cateList;
-			},
+			// async loadCateList(fid, sid){
+			// 	let list = await this.$api.json('cateList');
+			// 	let cateList = list.filter(item=>item.pid == fid);
+			// 	
+			// 	cateList.forEach(item=>{
+			// 		let tempList = list.filter(val=>val.pid == item.id);
+			// 		item.child = tempList;
+			// 	})
+			// 	this.cateList = cateList;
+			// },
 			//加载商品 ，带下拉刷新和上滑加载
 			async loadData(type='add', loading) {
 				//没有更多直接返回
@@ -129,6 +129,7 @@
 					data: {},
 					success: res => {
 						this.goodsList = res.data.data.list;
+						this.cateList = res.data.data.filterCategoryList;
 					},
 					fail: () => {},
 					complete: () => {}
